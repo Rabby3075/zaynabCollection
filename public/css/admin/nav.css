@@ -1,0 +1,13 @@
+.logo{
+    display: inline;
+}
+.navbar .navbar-nav .dropdown .dropdown-menu .logout{
+    transition: background-color 0.5s ease;
+}
+.navbar .navbar-nav .dropdown .dropdown-menu .logout :hover{
+    background-color: rgb(243, 6, 6);
+    color: white;
+}
+.dropdown-item{
+    font-size: small;
+}
