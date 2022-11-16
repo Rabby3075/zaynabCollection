@@ -99,16 +99,19 @@ class AdminController extends Controller
     );
     $loginCheck = Admin::where('email',$request->email)->where('password',$request->password)->first();
     if($loginCheck){
-       /* $request->session()->put('id',$loginCheck->id);
+        $request->session()->put('id',$loginCheck->id);
         $request->session()->put('email',$loginCheck->email);
         $request->session()->put('phone',$loginCheck->phone);
         $request->session()->put('username',$loginCheck->username);
-        $request->session()->put('password',$loginCheck->password);*/
+        $request->session()->put('password',$loginCheck->password);
         Mail::to($loginCheck->email)->send(new loginMail());
-        return "login successful";
+        return  redirect()->route('Homepage');
     }
     else{
         return redirect()->back()->with('message', 'Login failed due to invalid username and password');
     }
+    }
+    public function Homepage(){
+        return view('Admin.Dashboard.HomePage.home');
     }
 }

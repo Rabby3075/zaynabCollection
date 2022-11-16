@@ -15,8 +15,9 @@ Route::group(['name' => 'Admin'], function() {
         Route::post('/admin/login/submit',[AdminController::class, 'login'])->name('AdminLogin');
     });
     Route::group(['name' => 'Dashboard','middleware' => 'AdminValid'], function() {
-        Route::group(['name' => 'Main','middleware' => 'AdminValid'], function() {
 
+        Route::group(['name' => 'Main','middleware' => 'AdminValid'], function() {
+            Route::get('/admin-home',[AdminController::class, 'Homepage'])->name('Homepage');
         });
     });
 });
