@@ -1,28 +1,13 @@
 @if(Session::get('email'))
 @extends('Admin.Dashboard.Main.main')
 @section('content')
-    <div class="main-panel">
+    <div class="main-panel" onload="loadDoc()">
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-md-12 grid-margin">
                     <div class="row">
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Welcome {{Session::get('username')}}</h3>
-                        </div>
-                        <div class="col-12 col-xl-4">
-                            <div class="justify-content-end d-flex">
-                                <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                    <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                        <a class="dropdown-item" href="#">January - March</a>
-                                        <a class="dropdown-item" href="#">March - June</a>
-                                        <a class="dropdown-item" href="#">June - August</a>
-                                        <a class="dropdown-item" href="#">August - November</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,11 +20,11 @@
                             <div class="weather-info">
                                 <div class="d-flex">
                                     <div>
-                                        <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
+                                        <h2 class="mb-0 font-weight-normal" id="temp"></h2>
                                     </div>
                                     <div class="ml-2">
-                                        <h4 class="location font-weight-normal">Bangalore</h4>
-                                        <h6 class="font-weight-normal">India</h6>
+                                        <h4 class="location font-weight-normal" id="city"></h4>
+                                        <h6 class="font-weight-normal" id="country"></h6>
                                     </div>
                                 </div>
                             </div>
@@ -656,5 +641,28 @@
         </footer>
         <!-- partial -->
     </div>
+    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        document.getElementById('city').innerText = geoplugin_city()
+        document.getElementById('country').innerText = geoplugin_countryName()
+        console.log(geoplugin_city())
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var resp = JSON.parse( this.responseText);
+                    console.log(resp);
+                    let temp =  resp.main.temp;
+                    console.log(temp)
+                    let celcius = temp - 273.15;
+                    console.log(celcius)
+                    document.getElementById('temp').innerHTML = "<i class='icon-sun mr-2'></i>" + celcius + "<sup>C</sup>"
+                }
+            };
+            xhttp.open("GET", `https://api.openweathermap.org/data/2.5/weather?lat=${geoplugin_latitude()}&lon=${geoplugin_longitude()}&appid=25901c16a28a5636d424f2c7142e1d47`);
+            xhttp.send();
+
+    </script>
 @endsection
 @endif

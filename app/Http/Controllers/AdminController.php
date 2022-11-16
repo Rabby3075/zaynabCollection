@@ -111,7 +111,9 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Login failed due to invalid username and password');
     }
     }
+
     public function Homepage(){
+
         return view('Admin.Dashboard.HomePage.home');
     }
 }
