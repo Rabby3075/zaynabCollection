@@ -108,7 +108,7 @@ class AdminController extends Controller
         return "login successful";
     }
     else{
-        return redirect()->back()->with('failed', 'Login failed due to invalid username and password');
+        return redirect()->back()->with('message', 'Login failed due to invalid username and password');
     }
     }
 }

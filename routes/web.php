@@ -6,10 +6,17 @@ use App\Http\Controllers\AdminController;
 /*---------Controller----------*/
 
 
-Route::get('/', function () { return view('welcome');});
+Route::get('/', function () { return view('Admin.Dashboard.Main.main');});
 
-/*-----------Admin-----------------*/
-Route::get('/admin/login',[AdminController::class, 'loginView'])->name('AdminLoginView');
-Route::post('/admin/login/submit',[AdminController::class, 'login'])->name('AdminLogin');
-Route::get('/admin/home',function () { return view('Admin.Dashboard.Home');})->name('AdminHome')->middleware('AdminValid');
-/*-----------Admin-----------------*/
+
+Route::group(['name' => 'Admin'], function() {
+    Route::group(['name' => 'Authentication'], function() {
+        Route::get('/admin/login',[AdminController::class, 'loginView'])->name('AdminLoginView');
+        Route::post('/admin/login/submit',[AdminController::class, 'login'])->name('AdminLogin');
+    });
+    Route::group(['name' => 'Dashboard','middleware' => 'AdminValid'], function() {
+        Route::group(['name' => 'Main','middleware' => 'AdminValid'], function() {
+
+        });
+    });
+});

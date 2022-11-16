@@ -5,9 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="{{asset('css/library/bootstrap.css')}}">
+    <link rel="stylesheet" href="/css/library/bootstrap.css">
     <link rel="stylesheet" href="{{asset('css/admin/login.css')}}">
-    <script src="{{asset('js/library/bootstrap.js')}}"></script>
 </head>
 <body>
 <section class="vh-100">
@@ -19,31 +18,26 @@
           <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
           <span class="h1 fw-bold mb-0"><img  src="../image/default/logo.jpg" alt="logo" width=170 height=120></span>
         </div>
-
-
         <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
-
-
-          <form style="width: 23rem;" action="{{route('AdminLogin')}}" method="post">
+        <form style="width: 23rem;" action="{{route('AdminLogin')}}" method="post">
           {{csrf_field()}}
-                            @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible">
+             @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible">
+                    <ul>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                 </div>
+              @endif
 
-                                     <ul>
-                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                         @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                         @endforeach
-                                     </ul>
-                                </div>
-                         @endif
-
-                         @if (\Session::has('failed'))
-                         <div class="alert alert-danger alert-dismissible">
-                        {!! \Session::get('failed') !!}
-                        </div>
-                        @endif
-
+            @if(Session::has('message'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <p>{{Session::get('message')}}</p>
+                </div>
+            @endif
             <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log in</h3>
 
             <div class="form-outline mb-4">
@@ -75,4 +69,6 @@
 </section>
 
 </body>
+    <script src="{{asset('js/library/bootstrap.js')}}"></script>
+    <script src="/js/admin/login.js"></script>
 </html>
