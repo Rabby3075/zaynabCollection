@@ -35,7 +35,11 @@ Route::group(['name' => 'Admin'], function() {
         });
         Route::group(['name' => 'Product Details','middleware' => 'AdminValid'], function() {
             Route::get('/add-product-details',[ProductDetailsController::class, 'addProductDetailsView'])->name('addProductDetailsView');
+            Route::get('/product-list',[ProductDetailsController::class, 'productList'])->name('productList');
             Route::post('/add-product',[ProductDetailsController::class, 'addProductDetails'])->name('addProductDetails');
+            Route::post('/delete-product',[ProductDetailsController::class, 'productDelete'])->name('productDelete');
+            Route::post('/update-product',[ProductDetailsController::class, 'editProduct'])->name('editProduct');
+            Route::get('/get-product-info/{id}',[ProductDetailsController::class,'getProductDetailsInfo'])->name('getProductDetailsInfo');
         });
 
     });

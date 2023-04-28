@@ -15,7 +15,7 @@
             <div class="collapse" id="product-management">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{route('productCategoryList')}}">Product Category</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Product List</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('productList')}}">Product List</a></li>
                 </ul>
             </div>
         </li>

@@ -54,6 +54,10 @@
                                         </span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="details">Caption</label>
+                                    <textarea class="form-control" id="details" name="details" rows="4" placeholder="Write details about this product"></textarea>
+                                </div>
 
 
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
