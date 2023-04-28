@@ -29,6 +29,6 @@ class loginMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Registration confirmation')->markdown('Admin.Mail.loginMail');
+        return $this->subject('Login Alert')->markdown('Admin.Mail.loginMail');
     }
 }

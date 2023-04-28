@@ -1,7 +1,7 @@
 @if(Session::get('email'))
 @extends('Admin.Dashboard.Main.main')
 @section('content')
-    <div class="main-panel" onload="loadDoc()">
+  <div class="main-panel" onload="loadDoc()">
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-md-12 grid-margin">
@@ -657,7 +657,7 @@
                     console.log(temp)
                     let celcius = temp - 273.15;
                     console.log(celcius)
-                    document.getElementById('temp').innerHTML = "<i class='icon-sun mr-2'></i>" + celcius + "<sup>C</sup>"
+                    document.getElementById('temp').innerHTML = "<i class='icon-sun mr-2'></i>" + celcius.toFixed(2) + "<sup>C</sup>"
                 }
             };
             xhttp.open("GET", `https://api.openweathermap.org/data/2.5/weather?lat=${geoplugin_latitude()}&lon=${geoplugin_longitude()}&appid=25901c16a28a5636d424f2c7142e1d47`);

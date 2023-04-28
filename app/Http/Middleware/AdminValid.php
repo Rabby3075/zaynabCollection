@@ -19,6 +19,9 @@ class AdminValid
         if($request->session()->get('username')){
             return $next($request);
         }
-        return redirect()->route('AdminLoginView');
+        else{
+            return redirect()->route('AdminLoginView');
+        }
+
     }
 }

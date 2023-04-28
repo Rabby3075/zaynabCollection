@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
+    <link rel="shortcut icon" type="image/png" href="../image/default/logo.jpg">
+
     <link rel="stylesheet" href="/css/library/bootstrap.css">
     <link rel="stylesheet" href="{{asset('css/admin/login.css')}}">
 </head>

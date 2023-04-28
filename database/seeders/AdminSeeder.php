@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             'phone'=> '01572158027',
             'username' => 'rashed3075',
             'password'=>'123456',
-           
+
 
         ]);
     }
