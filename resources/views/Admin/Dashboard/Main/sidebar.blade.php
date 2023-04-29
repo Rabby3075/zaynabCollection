@@ -8,7 +8,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#product-management" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-layout menu-icon"></i>
+                <i class="bi bi-box-seam menu-icon"></i>
                 <span class="menu-title">Product</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -21,7 +21,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#order-management" aria-expanded="false" aria-controls="form-elements">
-                <i class="icon-columns menu-icon"></i>
+                <i class="bi bi-journal-check menu-icon"></i>
                 <span class="menu-title">Order</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -33,7 +33,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#customer-management" aria-expanded="false" aria-controls="charts">
-                <i class="icon-bar-graph menu-icon"></i>
+                <i class="bi bi-people menu-icon"></i>
                 <span class="menu-title">Customer</span>
                 <i class="menu-arrow"></i>
             </a>

@@ -1,19 +1,18 @@
 @if(Session::get('email'))
     @extends('Admin.Dashboard.Main.main')
     @section('content')
-
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Product List</h4>
+                            <h4 class="card-title col-md-6">Product List</h4>
                             <div class="form-group row">
-                                <label class="col-md-6">
-                                    <input type="text" class="form-control bg-white" name="searchText" id="searchText" onkeyup="myFunction()" placeholder="Search Here"/>
-                                </label>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success float-left" id="export-btn"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Excel</button>
+                                </div>
                                 <div class="col-md-6 ml-0">
-                                    <span class="float-right col-md-6"><a href="{{route('addProductDetailsView')}}" class="btn btn-success float-right">+Add</a></span>
+                                    <a href="{{route('addProductDetailsView')}}" class="btn btn-success float-right"><i class="bi bi-plus-circle me-2"></i>Add</a>
                                 </div>
                             </div>
                             @if (\Session::has('success'))
@@ -208,7 +207,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="" id="image-modal" style="max-width: 100%; max-height: 100%;">
+                        <div id="carouselExample" class="carousel slide">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="" class="d-block w-100" id="headImage" alt="...">
+                                </div>
+
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -226,22 +240,59 @@
                     })
                 });
             });
+
+          /*  $(document).ready(function () {
+                $('body').on('click', '#show', function () {
+                    $("#headImage").attr("src", "");
+                    var itemsToRemove = $('.carousel-item.active').nextAll('div');
+                    itemsToRemove.remove();
+                    var userURL = $(this).data('url');
+                    $.get(userURL, function (data) {
+                        $('#showModal').modal('show');
+                        var images = JSON.parse(data.image);
+                       // console.log(images)
+                        //console.log(images[0])
+                        var imageSrc = "/ProductImage/" + images[0];
+                        $("#headImage").attr("src", imageSrc);
+
+
+                        for (var i = 1; i < images.length; i++){
+                            var imagesource = "/ProductImage/" + images[i];
+                            //console.log(imagesource)
+                            var item = $('<div>').addClass('carousel-item').append($('<img>').addClass('d-block w-100').attr('src', imagesource));
+                            $('.carousel-item.active').after(item);
+                        }
+                    })
+                });
+            });*/
+
+            function clearCarousel() {
+                // remove all carousel items except the first one
+                $('.carousel-item').not(':first').remove();
+                // set the first carousel item as active
+                $('.carousel-item:first').addClass('active');
+            }
             $(document).ready(function () {
                 $('body').on('click', '#show', function () {
-                    var url = $(this).data('url');
-                    $.get(url, function (data) {
-                        var images = JSON.parse(data.image);
-                        var firstImage = images[0];
-                        var imageSrc = "/ProductImage/" + firstImage;
-                        $('#image-modal').attr('src', imageSrc).css({'width': 'auto', 'height': 'auto', 'max-width': '100%', 'max-height': '100%'});
+                    $("#headImage").attr("src", "");
+                    var userURL = $(this).data('url');
+                    $.get(userURL, function (data) {
                         $('#showModal').modal('show');
+                        var images = JSON.parse(data.image);
+                        var imageSrc = "/ProductImage/" + images[0];
+                        $("#headImage").attr("src", imageSrc);
+
+                        // clear the carousel items
+                        clearCarousel();
+
+                        for (var i = 1; i < images.length; i++){
+                            var imagesource = "/ProductImage/" + images[i];
+                            var item = $('<div>').addClass('carousel-item').append($('<img>').addClass('d-block w-100').attr('src', imagesource));
+                            $('.carousel-item.active').after(item);
+                        }
                     })
                 });
             });
-
-
-
-
             $(document).ready(function () {
                 $('body').on('click', '#edit', function () {
                     var userURL = $(this).data('url');
@@ -257,26 +308,6 @@
                     })
                 });
             });
-        </script>
-        <script>
-            function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("searchText");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
-            }
         </script>
     @endsection
 @endif

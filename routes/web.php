@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', function () { return view('Admin.Dashboard.Main.main');});
 
-
+Route::fallback(function () {return view('Error.404');});
 Route::group(['name' => 'Admin'], function() {
 
     Route::group(['name' => 'Authentication'], function() {

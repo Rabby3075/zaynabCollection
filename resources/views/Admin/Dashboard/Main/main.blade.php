@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin Zaynab Collection</title>
+  <title>Admin</title>
     <link rel="shortcut icon" type="image/png" href="../image/default/logo.jpg">
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
@@ -26,6 +26,9 @@
   <!-- endinject -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d4fd55d14f.js" crossorigin="anonymous"></script>
+    <!--Table cdn-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
 
 </head>
 <body>
@@ -74,6 +77,31 @@
   <script src="../../js/typeahead.js"></script>
   <script src="../../js/select2.js"></script>
   <!-- End custom js for this page-->
+  <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+  <!--Table cdn-->
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable( {
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]] // 5 is the minimum value
+        } );
+        $('#myTable').DataTable();
+    });
+
+    function html_table_to_excel(type)
+    {
+        var data = document.getElementById('myTable');
+        var file = XLSX.utils.table_to_book(data, {sheet: "Report"});
+        XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+        XLSX.writeFile(file, 'data.' + type);
+    }
+    const export_button = document.getElementById('export-btn');
+    export_button.addEventListener('click', () =>  {
+        html_table_to_excel('xlsx');
+    });
+
+</script>
+
 </body>
 
 </html>

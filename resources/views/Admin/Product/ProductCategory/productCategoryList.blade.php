@@ -1,7 +1,10 @@
 @if(Session::get('email'))
     @extends('Admin.Dashboard.Main.main')
     @section('content')
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
 
+        <!-- JavaScript -->
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="col-lg-12 grid-margin stretch-card">
@@ -9,11 +12,11 @@
                         <div class="card-body">
                             <h4 class="card-title">Category List</h4>
                             <div class="form-group row">
-                                <label class="col-md-6">
-                                    <input type="text" class="form-control bg-white" name="searchText" id="searchText" onkeyup="myFunction()" placeholder="Search Here"/>
-                                </label>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success float-left" id="export-btn"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Excel</button>
+                                </div>
                                 <div class="col-md-6 ml-0">
-                                    <span class="float-right col-md-6"><a href="{{route('addProductCategoryView')}}" class="btn btn-success float-right">+Add</a></span>
+                                    <a href="{{route('addProductDetailsView')}}" class="btn btn-success float-right"><i class="bi bi-plus-circle me-2"></i>Add</a>
                                 </div>
                             </div>
                             @if (\Session::has('success'))
@@ -161,25 +164,6 @@
                 });
             });
         </script>
-<script>
-    function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchText");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
+
     @endsection
 @endif
