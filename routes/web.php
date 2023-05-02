@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductDetailsController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,9 @@ Route::group(['name' => 'Admin'], function() {
         Route::group(['name' => 'Main','middleware' => 'AdminValid'], function() {
             Route::get('/admin-home',[AdminController::class, 'Homepage'])->name('Homepage');
         });
-
+        Route::group(['name' => 'Company','middleware' => 'AdminValid'], function() {
+            Route::get('/company-controller',[CompanyController::class, 'companyView'])->name('companyView');
+        });
 
         Route::group(['name' => 'ProductCategory','middleware' => 'AdminValid'], function() {
             Route::get('/add-product-category',[ProductCategoryController::class, 'addProductCategoryView'])->name('addProductCategoryView');

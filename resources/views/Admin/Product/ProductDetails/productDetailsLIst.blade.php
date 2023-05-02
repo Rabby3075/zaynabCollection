@@ -1,8 +1,6 @@
 @if(Session::get('email'))
     @extends('Admin.Dashboard.Main.main')
     @section('content')
-        <div class="main-panel">
-            <div class="content-wrapper">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -16,22 +14,30 @@
                                 </div>
                             </div>
                             @if (\Session::has('success'))
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-
-                                    <p>{!! \Session::get('success') !!}</p>
-
+                                <div id="toast-container">
+                                    <div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                                        <div class="d-flex">
+                                            <div class="toast-body">
+                                                <i class="bi bi-check-circle"></i>
+                                                <label id="msg"></label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
-                            @if (\Session::has('failed'))
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-
-                                    <p>{!! \Session::get('failed') !!}</p>
-
-
+                            @if (\Session::has('failed')||\Session::has('delete'))
+                                <div id="toast-container">
+                                    <div class="toast align-items-center text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                                        <div class="d-flex">
+                                            <div class="toast-body">
+                                                <i class="bi bi-exclamation-circle"></i>
+                                                <label id="msg"></label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
+
                             <div class="table-responsive">
                                 <table class="table table-striped" id="myTable">
                                     <thead>
@@ -83,23 +89,10 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-                </div>
-            </footer>
-            <!-- partial -->
-        </div>
         <!-- Delete Modal-->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -240,32 +233,6 @@
                     })
                 });
             });
-
-          /*  $(document).ready(function () {
-                $('body').on('click', '#show', function () {
-                    $("#headImage").attr("src", "");
-                    var itemsToRemove = $('.carousel-item.active').nextAll('div');
-                    itemsToRemove.remove();
-                    var userURL = $(this).data('url');
-                    $.get(userURL, function (data) {
-                        $('#showModal').modal('show');
-                        var images = JSON.parse(data.image);
-                       // console.log(images)
-                        //console.log(images[0])
-                        var imageSrc = "/ProductImage/" + images[0];
-                        $("#headImage").attr("src", imageSrc);
-
-
-                        for (var i = 1; i < images.length; i++){
-                            var imagesource = "/ProductImage/" + images[i];
-                            //console.log(imagesource)
-                            var item = $('<div>').addClass('carousel-item').append($('<img>').addClass('d-block w-100').attr('src', imagesource));
-                            $('.carousel-item.active').after(item);
-                        }
-                    })
-                });
-            });*/
-
             function clearCarousel() {
                 // remove all carousel items except the first one
                 $('.carousel-item').not(':first').remove();
@@ -308,6 +275,26 @@
                     })
                 });
             });
+
         </script>
+                @if (\Session::has('success'))
+                    <script>
+                        $(document).ready(function () {
+                            showToast("{!! \Session::get('success') !!}");
+                        });
+                    </script>
+                @elseif(\Session::has('failed'))
+                    <script>
+                        $(document).ready(function () {
+                            showToast("{!! \Session::get('failed') !!}");
+                        });
+                    </script>
+                @elseif(\Session::has('delete'))
+                    <script>
+                        $(document).ready(function () {
+                            showToast("{!! \Session::get('delete') !!}");
+                        });
+                    </script>
+                @endif
     @endsection
 @endif

@@ -35,7 +35,7 @@ class ProductCategoryController extends Controller
     }
     public function deleteProductCategory(Request $request){
         $productCategory = ProductCategory::where('id',$request->id)->delete();
-        return  redirect()->route('productCategoryList')->with('success','Product Category deleted Successfully');
+        return  redirect()->route('productCategoryList')->with('delete','Product Category deleted Successfully');
     }
     public function editProductCategory(Request $request){
         $validate = $request->validate([

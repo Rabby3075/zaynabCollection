@@ -4,9 +4,8 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Add Product Category</h4>
-
-                            <form class="forms-sample" action="{{route('addProductCategory')}}" method="post" enctype="multipart/form-data">
+                            <h4 class="card-title">Add Company Information</h4>
+                            <form class="forms-sample" action="" method="post" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible">

@@ -63,7 +63,7 @@ class ProductDetailsController extends Controller
     }
     public function productDelete(Request $request){
         $product = ProductDetails::where('id',$request->id)->delete();
-        return redirect()->route('productList')->with('success','Product deleted Successfully');
+        return redirect()->route('productList')->with('delete','Product deleted Successfully');
     }
     public function editProduct(Request $request){
         $validate = $request->validate([

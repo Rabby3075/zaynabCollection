@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Admin</title>
     <link rel="shortcut icon" type="image/png" href="../image/default/logo.jpg">
+
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
@@ -29,7 +30,28 @@
     <script src="https://kit.fontawesome.com/d4fd55d14f.js" crossorigin="anonymous"></script>
     <!--Table cdn-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
+<!--Toast-->
+    <style>
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .toast .progress-bar {
+            animation: progress 5s linear;
+        }
 
+        @keyframes progress {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+    <!--Toast-->
 </head>
 <body>
   <div class="container-scroller">
@@ -43,7 +65,17 @@
       <!-- partial:partials/_sidebar.html -->
         @include('Admin.Dashboard.Main.sidebar')
       <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
         @yield('content')
+            </div>
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+            </footer>
+        </div>
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
@@ -87,7 +119,8 @@
         } );
         $('#myTable').DataTable();
     });
-
+    <!--Table cdn-->
+    <!--Excel Conversion-->
     function html_table_to_excel(type)
     {
         var data = document.getElementById('myTable');
@@ -99,7 +132,29 @@
     export_button.addEventListener('click', () =>  {
         html_table_to_excel('xlsx');
     });
+    <!--Excel Conversion-->
+    <!--Toast JS-->
+    function showToast(msg) {
+        $('.toast').toast('show');
+        $('#msg').text(msg);
+        var toastElement = $('.toast:last');
+        var toastInterval = setInterval(function() {
+            var progressBar = toastElement.find('.toast-progress-bar');
+            var currentTime = parseFloat(progressBar.attr('aria-valuenow'));
+            var maxTime = parseFloat(progressBar.attr('aria-valuemax'));
+            var percentage = Math.round((currentTime / maxTime) * 100);
 
+            if (currentTime >= maxTime) {
+                clearInterval(toastInterval);
+                $('.toast').remove();
+            } else {
+                currentTime += 0.1; // Change the timer speed here
+                progressBar.css('width', percentage + '%');
+                progressBar.attr('aria-valuenow', currentTime.toFixed(1));
+            }
+        }, 100);
+    }
+    <!--Toast JS-->
 </script>
 
 </body>
