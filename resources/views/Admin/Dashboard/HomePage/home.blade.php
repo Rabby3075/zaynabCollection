@@ -632,8 +632,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
         document.getElementById('city').innerText = geoplugin_city()
-        document.getElementById('country').innerText = geoplugin_countryName()
         console.log(geoplugin_city())
+        document.getElementById('country').innerText = geoplugin_countryName()
+        console.log(geoplugin_countryName())
 
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {

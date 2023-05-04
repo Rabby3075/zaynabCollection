@@ -26,6 +26,7 @@ Route::group(['name' => 'Admin'], function() {
         });
         Route::group(['name' => 'Company','middleware' => 'AdminValid'], function() {
             Route::get('/company-controller',[CompanyController::class, 'companyView'])->name('companyView');
+            Route::post('/company-management',[CompanyController::class, 'companyManagement'])->name('companyManagement');
         });
 
         Route::group(['name' => 'ProductCategory','middleware' => 'AdminValid'], function() {

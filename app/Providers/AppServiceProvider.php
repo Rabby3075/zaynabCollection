@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Company;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +40,11 @@ class AppServiceProvider extends ServiceProvider
             $max = Arr::get($parameters, 1);
 
             return str_replace([':min', ':max'], [$min, $max], $message);
+        });
+
+        view()->composer('Admin.Dashboard.Main.navbar', function ($view) {
+            $companyData = Company::first();
+            $view->with('companyData', $companyData);
         });
     }
 }
