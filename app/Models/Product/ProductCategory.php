@@ -11,6 +11,6 @@ class ProductCategory extends Model
     public $timestamps = false;
     public function products()
     {
-        return $this->hasMany(ProductDetails::class)->onDelete('cascade');
+        return $this->hasMany(ProductDetails::class);
     }
 }

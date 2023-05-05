@@ -6,7 +6,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Admin</title>
-    <link rel="shortcut icon" type="image/png" href="../image/default/logo.jpg">
+    @isset($companyData->logo)
+    <link rel="shortcut icon" type="image/png" href="/Company/{{ $companyData->logo }}">
+    @else
+        <link rel="shortcut icon" type="image/png" href="image/default/logo.jpg">
+    @endisset
 
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">

@@ -10,6 +10,6 @@ class ProductDetails extends Model
     use HasFactory;
     public function category()
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class,'category');
     }
 }

@@ -6,7 +6,10 @@ use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Company;
+use App\Models\Product\ProductCategory;
+use App\Models\Product\ProductDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\loginMail;
@@ -115,38 +118,22 @@ class AdminController extends Controller
     }
 
     public function Homepage(){
+        $productCategory = DB::table('product_details')
+            ->join('product_categories', 'product_details.category', '=', 'product_categories.id')
+            ->select(DB::raw('count(product_categories.id) as count, product_categories.categoryName'))
+            ->groupBy('product_categories.categoryName')
+            ->get();
+        $product = ProductDetails::all();
 
-        return view('Admin.Dashboard.HomePage.home');
+        return view('Admin.Dashboard.HomePage.home',compact('productCategory','product'));
     }
-    public function companyManagement(Request $request){
-        return $request;
-        /*$check = Company::first();
-        if($check){
-            $check->companyName = $request->companyName;
-            $check->businessType = $request->businessType;
-            $check->businessMoto = $request->businessMoto;
-            $check->fbLink = $request->fbLink;
-            $check->email = $request->email;
-            $check->mobile = $request->mobile;
-            $check->address = $request->address;
-            $check->ownerName = $request->ownerName;
-            $check->details = $request->details;
-            $check->save();
-            return "Update";
-        }
-        else {
-            $company = new Company();
-            $company->companyName = $request->companyName;
-            $company->businessType = $request->businessType;
-            $company->businessMoto = $request->businessMoto;
-            $company->fbLink = $request->fbLink;
-            $company->email = $request->email;
-            $company->mobile = $request->mobile;
-            $company->address = $request->address;
-            $company->ownerName = $request->ownerName;
-            $company->details = $request->details;
-            $company->save();
-            return "Save";
-        }*/
+    public function logout(Request $request){
+        session()->forget('id');
+        session()->forget('email');
+        session()->forget('phone');
+        session()->forget('username');
+        session()->forget('password');
+        return  redirect()->route('Homepage');
     }
+
 }

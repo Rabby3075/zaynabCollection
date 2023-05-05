@@ -41,10 +41,5 @@ class AppServiceProvider extends ServiceProvider
 
             return str_replace([':min', ':max'], [$min, $max], $message);
         });
-
-        view()->composer('Admin.Dashboard.Main.navbar', function ($view) {
-            $companyData = Company::first();
-            $view->with('companyData', $companyData);
-        });
     }
 }

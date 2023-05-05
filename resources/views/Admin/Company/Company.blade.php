@@ -1,6 +1,12 @@
 @if(Session::get('email'))
     @extends('Admin.Dashboard.Main.main')
     @section('content')
+        <style>
+            #image-preview {
+                height: 150px; /* Set the fixed height */
+                padding: 0; /* Remove padding */
+            }
+        </style>
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
@@ -128,12 +134,12 @@
                                     </div>
 
 
-                                    <div class="row">
+                                    <div class="row mt-2">
                                         <div class="col-sm-12">
                                             @if(!empty($company->logo))
                                             <img src="/Company/{{$company->logo}}" class="img-thumbnail mx-auto d-block" id="image-preview" alt="Company Logo">
                                             @else
-                                                <img id="image-preview" src="#" alt="Company Logo">
+                                                <img id="image-preview" class="img-thumbnail mx-auto d-block" src="#" alt="Company Logo">
                                             @endif
                                         </div>
                                     </div>
