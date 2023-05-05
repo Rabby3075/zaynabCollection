@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductDetailsController;
 use Illuminate\Support\Facades\Route;
@@ -48,4 +49,8 @@ Route::group(['name' => 'Admin'], function() {
         });
 
     });
+});
+
+Route::group(['name' => 'Authentication'], function() {
+    Route::get('/customer-registration',[CustomerController::class, 'registrationView'])->name('registrationView');
 });
