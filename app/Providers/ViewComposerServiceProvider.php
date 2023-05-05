@@ -24,7 +24,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['Admin.Dashboard.Main.navbar','Admin.Dashboard.Main.main'], function ($view) {
+        view()->composer(['Admin.Dashboard.Main.navbar','Admin.Dashboard.Main.main','Customer.Main.main','Customer.Main.navbar'], function ($view) {
             $companyData = Company::first();
             $view->with('companyData', $companyData);
         });
