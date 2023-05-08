@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Company;
 use App\Models\Product\ProductCategory;
 use App\Models\Product\ProductDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\loginMail;
+use PragmaRX\Google2FA\Google2FA;
+
 
 class AdminController extends Controller
 {
@@ -93,7 +94,7 @@ class AdminController extends Controller
     }
 
     public function loginView(){
-        return view('Admin.login');
+        return view('Admin.Auth.login');
     }
 
     public function login(Request $request){
@@ -102,19 +103,46 @@ class AdminController extends Controller
             'password'=>'required'
         ]
     );
-    $loginCheck = Admin::where('email',$request->email)->where('password',$request->password)->first();
-    if($loginCheck){
-        $request->session()->put('id',$loginCheck->id);
-        $request->session()->put('email',$loginCheck->email);
-        $request->session()->put('phone',$loginCheck->phone);
-        $request->session()->put('username',$loginCheck->username);
-        $request->session()->put('password',$loginCheck->password);
-        Mail::to($loginCheck->email)->send(new loginMail());
-        return  redirect()->route('Homepage');
+
+        $credentials = $request->only('email', 'password');
+        $auth = Auth::guard('admin')->attempt($credentials);
+        if ($auth) {
+            $user = Auth::guard('admin')->user();
+            $google2fa = app(Google2FA::class);
+            $user->otp = $google2fa->generateSecretKey();
+            $user->save();
+            $this->send2FAEmail($user);
+            return redirect()->route('OtpView')->with('message', 'An Otp code send to your email');
+        } else {
+            return redirect()->back()->with('message', 'Login failed due to invalid username and password');
+        }
+
     }
-    else{
-        return redirect()->back()->with('message', 'Login failed due to invalid username and password');
+    public function OtpView(){
+        return view('Admin.Auth.Otp');
     }
+    public function verify2FA(Request $request)
+    {
+        $user = Auth::guard('admin')->user();
+        $google2fa = app(Google2FA::class);
+        $valid = $google2fa->verifyKey($user->otp, $request->otp);
+
+        if ($valid) {
+            return "success";
+        } else {
+            return "failed";
+        }
+    }
+
+    private function send2FAEmail($user)
+    {
+        $secretKey = $user->otp;
+        $email = $user->email;
+        $details = [
+            'title' => 'Registration Confirmation',
+            'code' => $secretKey
+        ];
+        Mail::to($email)->send(new loginMail($details));
     }
 
     public function Homepage(){
@@ -128,11 +156,7 @@ class AdminController extends Controller
         return view('Admin.Dashboard.HomePage.home',compact('productCategory','product'));
     }
     public function logout(Request $request){
-        session()->forget('id');
-        session()->forget('email');
-        session()->forget('phone');
-        session()->forget('username');
-        session()->forget('password');
+        Auth::guard('admin')->logout();
         return  redirect()->route('Homepage');
     }
 

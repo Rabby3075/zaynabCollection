@@ -1,4 +1,3 @@
-@if(Session::get('email'))
 @extends('Admin.Dashboard.Main.main')
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -218,4 +217,4 @@
         }
     </script>
 @endsection
-@endif
+

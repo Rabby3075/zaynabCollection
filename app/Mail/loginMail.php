@@ -17,9 +17,9 @@ class loginMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -29,6 +29,6 @@ class loginMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Login Alert')->markdown('Admin.Mail.loginMail');
+        return $this->subject('Login Alert')->markdown('Admin.Mail.loginMail')->with('details', $this->details);
     }
 }

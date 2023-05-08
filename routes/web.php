@@ -19,6 +19,8 @@ Route::group(['name' => 'Admin'], function() {
         Route::get('/admin/login',[AdminController::class, 'loginView'])->name('AdminLoginView');
         Route::get('/admin/logout',[AdminController::class, 'logout'])->name('logout');
         Route::post('/admin/login/submit',[AdminController::class, 'login'])->name('AdminLogin');
+        Route::get('/admin/otp',[AdminController::class, 'OtpView'])->name('OtpView');
+        Route::post('/verify-2fa',[AdminController::class, 'verify2FA'])->name('verify2FA');
     });
 
     Route::group(['name' => 'Dashboard','middleware' => 'AdminValid'], function() {

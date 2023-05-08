@@ -1,4 +1,4 @@
-@if(Session::get('email'))
+
     @extends('Admin.Dashboard.Main.main')
     @section('content')
                 <div class="col-12 grid-margin stretch-card">
@@ -64,4 +64,4 @@
                     </div>
                 </div>
     @endsection
-@endif
+

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminValid
 {
@@ -16,7 +17,7 @@ class AdminValid
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->get('username')){
+        if(Auth::guard('admin')->check()){
             return $next($request);
         }
         else{

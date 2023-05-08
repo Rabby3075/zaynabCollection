@@ -1,4 +1,4 @@
-@if(Session::get('email'))
+
     @extends('Admin.Dashboard.Main.main')
     @section('content')
         <style>
@@ -189,4 +189,4 @@
             });
         </script>
     @endsection
-@endif
+
