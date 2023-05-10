@@ -20,6 +20,7 @@ class AdminSeeder extends Seeder
             'email' => 'rashed.rabby001@gmail.com',
             'phone'=> '01572158027',
             'username' => 'rashed3075',
+            'status' => 0,
             'password'=>Hash::make('123456'),
 
 

@@ -12,86 +12,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\loginMail;
-use PragmaRX\Google2FA\Google2FA;
+use const http\Client\Curl\AUTH_ANY;
 
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAdminRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreAdminRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAdminRequest  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateAdminRequest $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
 
     public function loginView(){
         return view('Admin.Auth.login');
@@ -108,11 +33,12 @@ class AdminController extends Controller
         $auth = Auth::guard('admin')->attempt($credentials);
         if ($auth) {
             $user = Auth::guard('admin')->user();
-            $google2fa = app(Google2FA::class);
-            $user->otp = $google2fa->generateSecretKey();
+            $code = rand(1000,9999);
+            $user->otp = $code;
             $user->save();
             $this->send2FAEmail($user);
-            return redirect()->route('OtpView')->with('message', 'An Otp code send to your email');
+            //config(['session.lifetime' => 1]);
+            return redirect()->route('OtpView');
         } else {
             return redirect()->back()->with('message', 'Login failed due to invalid username and password');
         }
@@ -121,18 +47,18 @@ class AdminController extends Controller
     public function OtpView(){
         return view('Admin.Auth.Otp');
     }
-    public function verify2FA(Request $request)
-    {
+    public function verifyOtp(Request $request){
         $user = Auth::guard('admin')->user();
-        $google2fa = app(Google2FA::class);
-        $valid = $google2fa->verifyKey($user->otp, $request->otp);
-
-        if ($valid) {
-            return "success";
-        } else {
-            return "failed";
+        if ($user->otp === $request->otp){
+            $user->status = 1;
+            $user->save();
+            return redirect()->route('Homepage');
+        }
+        else{
+            return redirect()->back()->with('message', 'Invalid Otp');
         }
     }
+
 
     private function send2FAEmail($user)
     {
@@ -156,6 +82,9 @@ class AdminController extends Controller
         return view('Admin.Dashboard.HomePage.home',compact('productCategory','product'));
     }
     public function logout(Request $request){
+        $user = Auth::guard('admin')->user();
+        $user->status = 0;
+        $user->save();
         Auth::guard('admin')->logout();
         return  redirect()->route('Homepage');
     }

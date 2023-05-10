@@ -47,8 +47,25 @@
                     <h4 class="mb-0">OTP Verification</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('verify2FA')}}" method="post">
+                    <form action="{{route('verifyOtp')}}" method="post">
                         {{csrf_field()}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible">
+                                <ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        @if(Session::has('message'))
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                <p>{{Session::get('message')}}</p>
+                            </div>
+                        @endif
                         <div class="mb-3">
                             <label for="otp" class="form-label">Enter OTP</label>
                             <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP" required>

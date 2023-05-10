@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('otp')->nullable();
+            $table->integer('status')->nullable();
             //$table->timestamps();
         });
     }
