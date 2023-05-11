@@ -89,7 +89,7 @@
                         <i class="ti-home text-primary"></i>
                         Company Information
                     </a>
-                    <a class="dropdown-item" href="{{route('logout')}}">
+                    <a class="dropdown-item" href="{{route('AdminLogout')}}">
                         <i class="ti-power-off text-primary"></i>
                         Logout
                     </a>

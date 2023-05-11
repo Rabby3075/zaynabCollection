@@ -17,8 +17,16 @@ class AdminValid
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::guard('admin')->check()){
-            return $next($request);
+        $check = Auth::guard('admin')->check();
+        if($check){
+            $user = Auth::guard('admin')->user();
+            if ($user->status === 1){
+                return $next($request);
+            }
+            else{
+                return redirect()->route('OtpView');
+            }
+
         }
         else{
             return redirect()->route('AdminLoginView');

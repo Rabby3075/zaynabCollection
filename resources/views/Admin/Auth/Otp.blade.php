@@ -22,20 +22,6 @@
             text-align: center;
             padding: 15px;
         }
-
-        .form-control {
-            border-radius: 5px;
-        }
-
-        .btn-primary {
-            background-color: #000;
-            border-color: #000;
-        }
-
-        .btn-primary:hover {
-            background-color: #333;
-            border-color: #333;
-        }
     </style>
 </head>
 <body>
@@ -70,7 +56,8 @@
                             <label for="otp" class="form-label">Enter OTP</label>
                             <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                        <button type="submit" class="btn btn-success">Verify</button>
+                        <a class="btn btn-danger float-end" href="{{route('AdminLogout')}}" role="button">Logout</a>
                     </form>
                 </div>
             </div>
