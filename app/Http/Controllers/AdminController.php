@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\loginMail;
 use Illuminate\Support\Str;
 
-
 class AdminController extends Controller
 {
     private static function get_user_agent()
@@ -25,12 +24,13 @@ class AdminController extends Controller
 
     public function loginView()
     {
-        return view('Admin.Auth.login');
+        $companyData = Company::first();
+        return view('Admin.Auth.login')->with('companyData', $companyData);
     }
 
     public function login(Request $request)
     {
-        $validate = $request->validate(['email' => 'required', 'password' => 'required']);
+       $validate = $request->validate(['email' => 'required', 'password' => 'required']);
         $credentials = $request->only('email', 'password');
         $auth = Auth::guard('admin')->attempt($credentials);
         if ($auth) {
@@ -151,7 +151,8 @@ class AdminController extends Controller
 
     public function OtpView()
     {
-        return view('Admin.Auth.Otp');
+        $companyData = Company::first();
+        return view('Admin.Auth.Otp')->with('companyData', $companyData);
     }
 
     public function verifyOtp(Request $request)
@@ -177,7 +178,13 @@ class AdminController extends Controller
 
     public function Homepage()
     {
-        $productCategory = DB::table('product_details')->join('product_categories', 'product_details.category', '=', 'product_categories.id')->select(DB::raw('count(product_categories.id) as count, product_categories.categoryName'))->groupBy('product_categories.categoryName')->get();
+        //$productCategory = DB::table('product_details')->join('product_categories', 'product_details.category', '=', 'product_categories.id')->select(DB::raw('count(product_categories.id) as count, product_categories.categoryName'))->groupBy('product_categories.categoryName')->get();
+        $productCategory = DB::table('product_categories')
+            ->leftJoin('product_details', 'product_details.category', '=', 'product_categories.id')
+            ->select('product_categories.categoryName', DB::raw('COUNT(CASE WHEN product_details.category IS NULL THEN NULL ELSE 1 END) AS count'))
+            ->groupBy('product_categories.categoryName')
+            ->get();
+
         $product = ProductDetails::all();
 
         return view('Admin.Dashboard.HomePage.home', compact('productCategory', 'product'));
@@ -185,6 +192,9 @@ class AdminController extends Controller
 
     public function logout(Request $request)
     {
+       $user = Auth::guard('admin')->user();
+        $user->status = 0;
+        $user->save();
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

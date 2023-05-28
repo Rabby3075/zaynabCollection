@@ -89,6 +89,11 @@
                         <i class="ti-home text-primary"></i>
                         Company Information
                     </a>
+                    <a class="dropdown-item" href="{{route('logHistory')}}">
+                        <i class="fa-clock-rotate-left text-primary"></i>
+                        Login History
+                    </a>
+
                     <a class="dropdown-item" href="{{route('AdminLogout')}}">
                         <i class="ti-power-off text-primary"></i>
                         Logout

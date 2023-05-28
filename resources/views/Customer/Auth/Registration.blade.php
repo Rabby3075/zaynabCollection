@@ -44,7 +44,7 @@
                             <form class="row g-4">
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Full Name">
+                                        <input type="text" class="form-control" name="name" id="fullname" placeholder="Full Name">
                                         <label for="fullname">Full Name</label>
                                     </div>
                                 </div>
@@ -62,7 +62,6 @@
                                         <label for="password">Password</label>
                                     </div>
                                 </div>
-
                             {{---    <div class="col-12">
                                     <div class="forgot-box">
                                         <div class="form-check ps-0 m-0 remember-box">
@@ -73,13 +72,11 @@
                                         </div>
                                     </div>
                                 </div> --}}
-
                                 <div class="col-12">
                                     <button class="btn btn-animation w-100" type="submit">Sign Up</button>
                                 </div>
                             </form>
                         </div>
-
                         <div class="other-log-in">
                             <h6>or</h6>
                         </div>

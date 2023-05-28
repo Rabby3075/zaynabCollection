@@ -60,7 +60,7 @@
 
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                     <div class="card card-light-blue">
-                        <div class="card-body">
+                        <div class="card-body" id="productBody">
                             <p class="mb-4">Number of Products</p>
                             <p class="fs-30 mb-2">{{$product->count()}}</p>
                         </div>
@@ -97,7 +97,7 @@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <h5 class="card-header d-flex justify-content-between align-items-center">
-                        Product Category
+                        Product
                         <button class="btn btn-sm btn-primary" onclick="downloadChart()">Download Chart</button>
                     </h5>
                     <div class="card-body">
@@ -140,7 +140,7 @@
             quantities.push(item.count);
         });
         var productCategory = new Chart(ctx, {
-            type: 'pie',
+            type: 'bar',
             data: {
                 labels: names,
                 datasets: [{
@@ -190,7 +190,7 @@
             quantities.push(item.quantity);
         });
         var productCategory = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: names,
                 datasets: [{

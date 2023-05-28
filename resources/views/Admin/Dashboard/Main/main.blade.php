@@ -5,11 +5,16 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin</title>
+
     @isset($companyData->logo)
     <link rel="shortcut icon" type="image/png" href="/Company/{{ $companyData->logo }}">
     @else
         <link rel="shortcut icon" type="image/png" href="image/default/logo.jpg">
+    @endisset
+    @isset($companyData->companyName)
+        <title>{{$companyData->companyName}} Admin</title>
+    @else
+        <title>Admin</title>
     @endisset
 
   <!-- plugins:css -->

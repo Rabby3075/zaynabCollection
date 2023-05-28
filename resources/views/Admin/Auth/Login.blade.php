@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="shortcut icon" type="image/png" href="../image/default/logo.jpg">
-
     <link rel="stylesheet" href="/css/library/bootstrap.css">
-    <link rel="stylesheet" href="{{asset('css/admin/login.css')}}">
+    @isset($companyData->logo)
+        <link rel="shortcut icon" type="image/png" href="/Company/{{ $companyData->logo }}">
+    @else
+        <link rel="shortcut icon" type="image/png" href="image/default/logo.jpg">
+    @endisset
 </head>
 <body>
 <section class="vh-100">
@@ -18,7 +20,12 @@
 
         <div class="px-5 ms-xl-4">
           <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
-          <span class="h1 fw-bold mb-0"><img  src="../image/default/logo.jpg" alt="logo" width=170 height=120></span>
+            @isset($companyData->logo)
+                <span class="h1 fw-bold mb-0"><img  src="/Company/{{ $companyData->logo }}" alt="logo" width=170 height=120></span>
+            @else
+                <span class="h1 fw-bold mb-0">Logo</span>
+            @endisset
+
         </div>
         <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
         <form style="width: 23rem;" action="{{route('AdminLogin')}}" method="post">

@@ -12,7 +12,7 @@
                     </button>
                     <a href="index.html" class="web-logo nav-logo">
                         @isset($companyData->logo)
-                        <img src="/Company/{{$companyData->logo}}" class="img-fluid blur-up lazyload" alt="">
+                        <img src="/Company/{{$companyData->logo}}" class="img-fluid blur-up lazyload" alt="Logo">
                         @else
                             Logo
                         @endisset
