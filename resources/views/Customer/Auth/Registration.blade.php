@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadscrumb-contain">
-                        <h2>Sign In</h2>
+                        <h2>Sign Up</h2>
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -13,7 +13,7 @@
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item active">Sign In</li>
+                                <li class="breadcrumb-item active">Sign Up</li>
                             </ol>
                         </nav>
                     </div>
@@ -44,8 +44,8 @@
                             <form class="row g-4">
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="text" class="form-control" name="name" id="fullname" placeholder="Full Name">
-                                        <label for="fullname">Full Name</label>
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="Full Name">
+                                        <label for="name">Full Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -57,11 +57,26 @@
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
+                                        <input type="number" class="form-control" name="phone" id="phone" placeholder="11 Digit Mobile Number">
+                                        <label for="phone">Mobile Number</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="text" class="form-control" name="address" id="address" placeholder="Eg. 40,****, Dhaka, Bangladesh">
+                                        <label for="name">Address</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
                                         <input type="password" class="form-control" name="password" id="password"
                                                placeholder="Password">
                                         <label for="password">Password</label>
                                     </div>
                                 </div>
+
                             {{---    <div class="col-12">
                                     <div class="forgot-box">
                                         <div class="form-check ps-0 m-0 remember-box">
