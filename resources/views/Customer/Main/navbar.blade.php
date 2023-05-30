@@ -10,7 +10,7 @@
                                     <i class="fa-solid fa-bars"></i>
                                 </span>
                     </button>
-                    <a href="index.html" class="web-logo nav-logo">
+                    <a href="/" class="web-logo nav-logo">
                         @isset($companyData->logo)
                         <img src="/Company/{{$companyData->logo}}" class="img-fluid blur-up lazyload" alt="Logo">
                         @else
@@ -84,7 +84,15 @@
                                     <ul class="user-box-name">
                                         @auth
                                             <li class="product-box-contain">
-                                                <a href="#">Profile</a>
+                                                @php
+                                                $fullname = auth()->user()->name;
+                                                $name = strpos($fullname, ' ');
+                                                if($name!=false){
+                                                    $firstName = substr($fullname, 0, $name);
+                                                }
+                                                else{$firstName = $fullname;}
+                                                @endphp
+                                                <a href="#">{{$firstName}}'s Profile</a>
                                             </li>
                                             <li class="product-box-contain">
                                                 <a href="{{route('logout')}}">Logout</a>

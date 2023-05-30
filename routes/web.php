@@ -65,6 +65,7 @@ Route::group(['name' => 'user'], function() {
     Route::group(['name' => 'Authentication','middleware' => 'auth'], function() {
         Route::get('/customer-otp',[CustomerController::class, 'otpView'])->name('otpView');
         Route::post('/customer-otp',[CustomerController::class, 'otpSubmit'])->name('otpSubmit');
+        Route::get('/customer-otp-resend',[CustomerController::class, 'ResendOtp'])->name('ResendOtp');
     });
 });
 

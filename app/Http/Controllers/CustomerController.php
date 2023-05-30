@@ -14,7 +14,8 @@ class CustomerController extends Controller
 {
     public function registrationView()
     {
-        return view('Customer.Auth.Registration');
+        if (Auth::check()){return redirect()->back()->with('failed','You are already login');}
+        else{return view('Customer.Auth.Registration');}
     }
 
     public function registration(Request $request)
@@ -42,12 +43,13 @@ class CustomerController extends Controller
         }
         else{
             $user->save();
-            return redirect()->route('loginView')->with('success',' Registration Complete Successfully');
+            return redirect()->route('loginView')->with('success',' Registration Complete Successfully. Please logout to get access of this page');
         }
     }
     public function loginView()
     {
-        return view('Customer.Auth.Login');
+        if (Auth::check()){return redirect()->back()->with('failed','You are already login. Please logout to get access of this page');}
+        else{return view('Customer.Auth.Login');}
     }
     public function login(Request $request)
     {
@@ -93,6 +95,17 @@ class CustomerController extends Controller
             else{return redirect()->back()->with('failed','your email is already verified');}
         }
         else{return redirect()->back()->with('failed','you have no permission to access this page');}
+    }
+    public function ResendOtp()
+    {
+        if (Auth::check()){
+            $user = Auth::user();
+            $user->otp = Str::random(6);
+            $user->save();
+            $this->send2FAEmail($user);
+            return redirect()->route('otpView')->with('success','Resend otp on your email');
+        }
+        else{return redirect()->back()->with('failed','you are not allow to submit this');}
     }
     public function otpSubmit(Request $request){
         $otp = $request->first.$request->second.$request->third.$request->fourth.$request->fifth.$request->sixth;
