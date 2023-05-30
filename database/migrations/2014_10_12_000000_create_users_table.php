@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('password')->nullable();
             $table->string('image')->nullable();
+            $table->string('otp')->nullable();
             $table->integer('social_account')->nullable();
             $table->integer('status');
             $table->timestamps();

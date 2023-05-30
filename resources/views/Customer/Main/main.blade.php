@@ -13,7 +13,12 @@
     @else
         <link rel="shortcut icon" type="image/png" href="image/default/logo.jpg">
     @endisset
-    <title>Register</title>
+    @isset($companyData->companyName)
+        <title>{{$companyData->companyName}}</title>
+    @else
+        <title>Shop</title>
+    @endisset
+
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -25,9 +30,10 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/font-awesome.css">
     <!-- feather icon css -->
     <link rel="stylesheet" type="text/css" href="../assets/css/vendors/feather-icon.css">
-
     <!-- Template css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- Boostrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -93,6 +99,9 @@
 <!-- Bg overlay Start -->
 <div class="bg-overlay"></div>
 <!-- Bg overlay End -->
+
+<!--Footer-->
+{{--@include('Customer.Main.footer')--}}
 
 <!-- latest jquery-->
 <script src="../assets/js/jquery-3.6.0.min.js"></script>

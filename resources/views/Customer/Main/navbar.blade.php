@@ -17,7 +17,6 @@
                             Logo
                         @endisset
                     </a>
-
                     <div class="middle-box">
                         <div class="search-box">
                             <div class="input-group">
@@ -83,18 +82,21 @@
 
                                 <div class="onhover-div onhover-div-login">
                                     <ul class="user-box-name">
-                                        <li class="product-box-contain">
-                                            <i></i>
-                                            <a href="login.html">Log In</a>
-                                        </li>
-
-                                        <li class="product-box-contain">
-                                            <a href="sign-up.html">Register</a>
-                                        </li>
-
-                                        <li class="product-box-contain">
-                                            <a href="forgot.html">Forgot Password</a>
-                                        </li>
+                                        @auth
+                                            <li class="product-box-contain">
+                                                <a href="#">Profile</a>
+                                            </li>
+                                            <li class="product-box-contain">
+                                                <a href="{{route('logout')}}">Logout</a>
+                                            </li>
+                                        @else
+                                            <li class="product-box-contain">
+                                                <a href="{{route('loginView')}}">Log In</a>
+                                            </li>
+                                            <li class="product-box-contain">
+                                                <a href="{{route('registrationView')}}">Register</a>
+                                            </li>
+                                        @endauth
                                     </ul>
                                 </div>
                             </li>

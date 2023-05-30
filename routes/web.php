@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 /*---------Controller----------*/
 
 
-Route::get('/', function () { return view('Admin.Dashboard.Main.main');});
+Route::get('/',[CustomerController::class, 'dashboard'])->name('dashboard');
 
 Route::fallback(function () {return view('Error.404');});
 Route::group(['name' => 'Admin'], function() {
@@ -53,6 +53,19 @@ Route::group(['name' => 'Admin'], function() {
     });
 });
 
-Route::group(['name' => 'Authentication'], function() {
-    Route::get('/customer-registration',[CustomerController::class, 'registrationView'])->name('registrationView');
+Route::group(['name' => 'user'], function() {
+    Route::group(['name' => 'Authentication'], function() {
+        Route::get('/customer-registration',[CustomerController::class, 'registrationView'])->name('registrationView');
+        Route::post('/customer-registration',[CustomerController::class, 'registration'])->name('registration');
+        Route::get('/customer-login',[CustomerController::class, 'loginView'])->name('loginView');
+        Route::get('/customer-opt',[CustomerController::class, 'otpView'])->name('otpView');
+        Route::post('/customer-login',[CustomerController::class, 'login'])->name('login');
+        Route::get('/customer-logout',[CustomerController::class, 'logout'])->name('logout');
+    });
+    Route::group(['name' => 'Authentication','middleware' => 'auth'], function() {
+        Route::get('/customer-otp',[CustomerController::class, 'otpView'])->name('otpView');
+        Route::post('/customer-otp',[CustomerController::class, 'otpSubmit'])->name('otpSubmit');
+    });
 });
+
+
