@@ -37,7 +37,7 @@
 </head>
 
 <body>
-
+@include('Customer.Main.toaster')
 <!-- Loader Start -->
 <div class="fullpage-loader">
     <span></span>
@@ -104,6 +104,7 @@
 {{--@include('Customer.Main.footer')--}}
 
 <!-- latest jquery-->
+
 <script src="../assets/js/jquery-3.6.0.min.js"></script>
 
 <!-- Bootstrap js-->

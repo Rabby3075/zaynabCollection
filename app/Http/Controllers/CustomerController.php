@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Mail\loginMail;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
 {
@@ -66,11 +68,54 @@ class CustomerController extends Controller
                 return redirect()->route('otpView')->with('success','Please check your email for otp');
             }
             else{
-                return redirect()->route('dashboard');
+                return redirect()->route('customer_dashboard')->with('success','Welcome in my shop');
             }
         }
         else {
             return redirect()->back()->with('failed', 'Login failed due to invalid email and password');
+        }
+    }
+    public function redirectToSocialite($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+    public function handleSocialiteCallback($provider)
+    {
+        try {
+            $user = Socialite::driver($provider)->stateless()->user();
+            $existingUser = User::where('email',$user->email)->first();
+            if (!$existingUser){
+                $newUser = new User();
+                $newUser->name = $user->name;
+                $newUser->email = $user->email;
+                $newUser->password = Hash::make(Str::random(8));
+                $newUser->image = $user->avatar;
+                $newUser->social_account = 1;
+                $newUser->status = 1;
+                $newUser->save();
+                Auth::login($newUser);
+                return redirect()->route('customer_dashboard')->with('success','Welcome in my shop');
+            }
+            else{
+                if ($existingUser->social_account===1) {
+                    if ($existingUser->status === 0) {
+                        Auth::login($existingUser);
+                        $code = Str::random(6);
+                        $existingUser->otp = $code;
+                        $existingUser->save();
+                        $this->send2FAEmail($existingUser);
+                        return redirect()->route('otpView')->with('success', 'Please check your email for otp');
+                    } elseif ($existingUser->status === 1) {
+                        Auth::login($existingUser);
+                        return redirect()->route('customer_dashboard')->with('success','Welcome in my shop');
+                    }
+                }
+                elseif ($existingUser->social_account===0){
+                    return redirect()->route('loginView')->with('failed','You are not allow to authenticate in this way');
+                }
+            }
+        } catch (Exception $e) {
+            dd($e);
         }
     }
     private function send2FAEmail($user)
@@ -113,13 +158,13 @@ class CustomerController extends Controller
         if ($user->otp === $otp){
             $user->status = 1;
             $user->save();
-            return view('Customer.Dashboard.dashboard');
+            return redirect()->route('customer_dashboard')->with('success','Welcome in my shop');
         }
         else{
             return redirect()->back()->with('failed','Invalid OTP');
         }
     }
-    public function dashboard()
+    public function customer_dashboard()
     {
         return view('Customer.Dashboard.dashboard');
     }

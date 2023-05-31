@@ -1,38 +1,5 @@
 @extends('Customer.Main.main')
 @section('content')
-    <style>
-        #toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-        .toast .progress-bar {
-            animation: progress 5s linear;
-        }
-
-        @keyframes progress {
-            from {
-                width: 0%;
-            }
-            to {
-                width: 100%;
-            }
-        }
-    </style>
-    @if (\Session::has('failed'))
-        <div id="toast-container">
-            <div class="toast align-items-center text-white bg-danger" role="alert"
-                 aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <i class="bi bi-exclamation-circle"></i>
-                        <label id="msg"></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
     <section class="breadscrumb-section pt-0">
         <div class="container-fluid-lg">
             <div class="row">
@@ -143,7 +110,7 @@
                         <div class="log-in-button">
                             <ul>
                                 <li>
-                                    <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin"
+                                    <a href="{{ url('authorized/google') }}"
                                        class="btn google-button w-100">
                                         <img src="../assets/images/inner-page/google.png" class="blur-up lazyload"
                                              alt="">
@@ -151,7 +118,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://www.facebook.com/" class="btn google-button w-100">
+                                    <a href="{{ url('authorized/facebook') }}" class="btn google-button w-100">
                                         <img src="../assets/images/inner-page/facebook.png" class="blur-up lazyload"
                                              alt=""> Sign up with Facebook
                                     </a>
@@ -173,28 +140,17 @@
         </div>
     </section>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            showToast("{!! \Session::get('failed') !!}");
-        });
-        function showToast(msg) {
-            $('.toast').toast('show');
-            $('#msg').text(msg);
-            var toastElement = $('.toast:last');
-            var toastInterval = setInterval(function() {
-                var progressBar = toastElement.find('.toast-progress-bar');
-                var currentTime = parseFloat(progressBar.attr('aria-valuenow'));
-                var maxTime = parseFloat(progressBar.attr('aria-valuemax'));
-                var percentage = Math.round((currentTime / maxTime) * 100);
-                if (currentTime >= maxTime) {
-                    clearInterval(toastInterval);
-                    $('.toast').remove();
-                } else {
-                    currentTime += 0.1; // Change the timer speed here
-                    progressBar.css('width', percentage + '%');
-                    progressBar.attr('aria-valuenow', currentTime.toFixed(1));
-                }
-            }, 100);
-        }
-    </script>
+    @if (\Session::has('success'))
+        <script>
+            $(document).ready(function () {
+                showToast("{!! \Session::get('success') !!}");
+            });
+        </script>
+    @elseif(\Session::has('failed'))
+        <script>
+            $(document).ready(function () {
+                showToast("{!! \Session::get('failed') !!}");
+            });
+        </script>
+    @endif
 @endsection

@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 /*---------Controller----------*/
 
 
-Route::get('/',[CustomerController::class, 'dashboard'])->name('dashboard');
+Route::get('/',[CustomerController::class, 'customer_dashboard'])->name('customer_dashboard');
 
 Route::fallback(function () {return view('Error.404');});
 Route::group(['name' => 'Admin'], function() {
@@ -62,7 +62,12 @@ Route::group(['name' => 'user'], function() {
         Route::post('/customer-login',[CustomerController::class, 'login'])->name('login');
         Route::get('/customer-logout',[CustomerController::class, 'logout'])->name('logout');
     });
-    Route::group(['name' => 'Authentication','middleware' => 'auth'], function() {
+    Route::group(['name' => 'socialite'], function() {
+        Route::get('authorized/{provider}', [CustomerController::class, 'redirectToSocialite']);
+        Route::get('authorized/{provider}/callback', [CustomerController::class, 'handleSocialiteCallback']);
+    });
+
+    Route::group(['name' => 'customer-otp','middleware' => 'auth'], function() {
         Route::get('/customer-otp',[CustomerController::class, 'otpView'])->name('otpView');
         Route::post('/customer-otp',[CustomerController::class, 'otpSubmit'])->name('otpSubmit');
         Route::get('/customer-otp-resend',[CustomerController::class, 'ResendOtp'])->name('ResendOtp');

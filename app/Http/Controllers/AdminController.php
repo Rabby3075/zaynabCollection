@@ -7,6 +7,7 @@ use App\Models\AdminLog;
 use App\Models\Company;
 use App\Models\Product\ProductCategory;
 use App\Models\Product\ProductDetails;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -178,7 +179,7 @@ class AdminController extends Controller
 
     public function Homepage()
     {
-        //$productCategory = DB::table('product_details')->join('product_categories', 'product_details.category', '=', 'product_categories.id')->select(DB::raw('count(product_categories.id) as count, product_categories.categoryName'))->groupBy('product_categories.categoryName')->get();
+        $users = User::where('status',1)->get();
         $productCategory = DB::table('product_categories')
             ->leftJoin('product_details', 'product_details.category', '=', 'product_categories.id')
             ->select('product_categories.categoryName', DB::raw('COUNT(CASE WHEN product_details.category IS NULL THEN NULL ELSE 1 END) AS count'))
@@ -187,7 +188,7 @@ class AdminController extends Controller
 
         $product = ProductDetails::all();
 
-        return view('Admin.Dashboard.HomePage.home', compact('productCategory', 'product'));
+        return view('Admin.Dashboard.HomePage.home', compact('productCategory', 'product','users'));
     }
 
     public function logout(Request $request)
