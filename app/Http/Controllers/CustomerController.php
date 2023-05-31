@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\loginMail;
+use App\Models\Product\ProductCategory;
+use App\Models\Product\ProductDetails;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -166,6 +168,8 @@ class CustomerController extends Controller
     }
     public function customer_dashboard()
     {
-        return view('Customer.Dashboard.dashboard');
+        $productCategories = ProductCategory::all();
+        $products = ProductDetails::where('status',1)->get();
+        return view('Customer.Dashboard.dashboard')->with('categories',$productCategories)->with('products',$products);
     }
 }

@@ -14,7 +14,6 @@ Route::get('/',[CustomerController::class, 'customer_dashboard'])->name('custome
 
 Route::fallback(function () {return view('Error.404');});
 Route::group(['name' => 'Admin'], function() {
-
     Route::group(['name' => 'Authentication'], function() {
         Route::get('/admin/login',[AdminController::class, 'loginView'])->name('AdminLoginView');
         Route::get('/admin/logout',[AdminController::class, 'logout'])->name('AdminLogout');
@@ -54,7 +53,7 @@ Route::group(['name' => 'Admin'], function() {
 });
 
 Route::group(['name' => 'user'], function() {
-    Route::group(['name' => 'Authentication'], function() {
+    Route::group(['name' => 'Customer-Authentication'], function() {
         Route::get('/customer-registration',[CustomerController::class, 'registrationView'])->name('registrationView');
         Route::post('/customer-registration',[CustomerController::class, 'registration'])->name('registration');
         Route::get('/customer-login',[CustomerController::class, 'loginView'])->name('loginView');
