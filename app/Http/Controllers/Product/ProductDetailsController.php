@@ -31,12 +31,13 @@ class ProductDetailsController extends Controller
         }
         $product = new ProductDetails();
         $product->productName = $request->name;
-        $product->category = $request->category;
+        $product->product_category_id = $request->category;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
         $product->image = json_encode($images);
         $product->status = 1;
         $product->details = $request->details;
+        $product->rating = 5;
         $result = $product->save();
         if ($result){
             foreach ($request->file('image') as $image) {

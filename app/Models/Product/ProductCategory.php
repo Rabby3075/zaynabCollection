@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductCategory extends Model
 {
-    use HasFactory;
     public $timestamps = false;
-    public function products()
+    public function product_details()
     {
         return $this->hasMany(ProductDetails::class);
     }
+    use HasFactory;
 }

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductDetails extends Model
 {
-    use HasFactory;
-    public function category()
+
+    public function product_category()
     {
-        return $this->belongsTo(ProductCategory::class,'category');
+        return $this->belongsTo(ProductCategory::class);
     }
+    use HasFactory;
 }

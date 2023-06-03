@@ -535,41 +535,9 @@
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                                           data-bs-toggle="dropdown">Home</a>
-
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="index.html">Kartshop</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-2.html">Sweetshop</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-3.html">Organic</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-4.html">Supershop</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-5.html">Classic shop</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-6.html">Furniture</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-7.html">Search Oriented</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-8.html">Category Focus</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="index-9.html">Fashion</a>
-                                            </li>
-                                        </ul>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="{{url('/')}}">Home</a>
                                     </li>
-
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="javascript:void(0)"
                                            data-bs-toggle="dropdown">Shop</a>

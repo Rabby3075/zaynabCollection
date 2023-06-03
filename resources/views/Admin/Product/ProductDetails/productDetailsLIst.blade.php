@@ -57,11 +57,7 @@
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>{{$product->productName}}</td>
                                             <td>
-                                                @foreach($categories as $category)
-                                                    @if($product->category === $category->id)
-                                                        {{$category->categoryName}}
-                                                    @endif
-                                                @endforeach
+                                                {{$product->product_category->categoryName}}
                                             </td>
                                             <td>{{$product->price}}</td>
                                             <td>{{$product->quantity}}</td>
@@ -270,7 +266,7 @@
                         $('#price').val(data.price);
                         $('#quantity').val(data.quantity);
                         $('#details').val(data.details);
-                        $('#category').val(data.category);
+                        $('#category').val(data.product_category_id);
                         $('#status').val(data.status);
                     })
                 });

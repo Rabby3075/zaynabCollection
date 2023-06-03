@@ -67,10 +67,8 @@ class CompanyController extends Controller
             $company->details = $request->details;
             $save = $company->save();
             if ($save){
-
                 return redirect()->route('companyView')->with('success','Company Details Save Successfully');
             }
-
         }
     }
 }

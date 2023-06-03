@@ -181,8 +181,8 @@ class AdminController extends Controller
     {
         $users = User::where('status',1)->get();
         $productCategory = DB::table('product_categories')
-            ->leftJoin('product_details', 'product_details.category', '=', 'product_categories.id')
-            ->select('product_categories.categoryName', DB::raw('COUNT(CASE WHEN product_details.category IS NULL THEN NULL ELSE 1 END) AS count'))
+            ->leftJoin('product_details', 'product_details.product_category_id', '=', 'product_categories.id')
+            ->select('product_categories.categoryName', DB::raw('COUNT(CASE WHEN product_details.product_category_id IS NULL THEN NULL ELSE 1 END) AS count'))
             ->groupBy('product_categories.categoryName')
             ->get();
 

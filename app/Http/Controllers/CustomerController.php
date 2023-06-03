@@ -169,7 +169,7 @@ class CustomerController extends Controller
     public function customer_dashboard()
     {
         $productCategories = ProductCategory::all();
-        $products = ProductDetails::where('status',1)->get();
+        $products = ProductDetails::with('product_category')->where('status',1)->get();
         return view('Customer.Dashboard.dashboard')->with('categories',$productCategories)->with('products',$products);
     }
 }
