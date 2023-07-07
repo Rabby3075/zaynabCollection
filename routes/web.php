@@ -66,11 +66,16 @@ Route::group(['name' => 'user'], function() {
         Route::get('authorized/{provider}/callback', [CustomerController::class, 'handleSocialiteCallback']);
     });
 
+    Route::group(['name' => 'productView'], function() {
+        Route::get('/product-summary/{id}',[ProductDetailsController::class,'getProductDetailsInfo'])->name('productSummary');
+    });
+
     Route::group(['name' => 'customer-otp','middleware' => 'auth'], function() {
         Route::get('/customer-otp',[CustomerController::class, 'otpView'])->name('otpView');
         Route::post('/customer-otp',[CustomerController::class, 'otpSubmit'])->name('otpSubmit');
         Route::get('/customer-otp-resend',[CustomerController::class, 'ResendOtp'])->name('ResendOtp');
     });
+
 });
 
 

@@ -1,6 +1,8 @@
 @extends('Customer.Main.main')
 @section('content')
-    <!-- Product Section Start -->
+    <div id="customerDashboard"></div>
+    @vite('resources/js/app.js')
+    {{--<!-- Product Section Start -->
     <section class="product-section">
         <div class="container-fluid-lg">
             <div class="row g-sm-4 g-3">
@@ -50,7 +52,7 @@
                                             </a>
                                             <ul class="product-option">
                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                                    <a id="view" data-url="{{route('getProductDetailsInfo',$product->id)}}"><i data-feather="eye"></i></a>
+                                                    <a id="view" data-url="{{route('productSummary',$product->id)}}"><i data-feather="eye"></i></a>
                                                 </li>
 
                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
@@ -87,7 +89,7 @@
                                             </ul>
                                             <span>{{$product->rating}}.0</span>
                                         </div>
-                                        <h5 class="price"><span class="theme-color">{{$product->price}} BDT</span> {{--<del>$15.15</del>--}}
+                                        <h5 class="price"><span class="theme-color">{{$product->price}} BDT</span> <!--<del>$15.15</del>-->
                                         </h5>
                                         <div class="add-to-cart-box bg-white">
                                             <button class="btn btn-add-cart addcart-button">Add
@@ -135,7 +137,7 @@
                     <div class="row g-sm-4 g-2">
                         <div class="col-lg-6">
                             <div class="slider-image">
-                                <img src="" class="img-fluid blur-up lazyload" id="productImage" alt="productHeadImage" title="Product Title Image">
+                                <img src="" class="img-fluid blur-up lazyload" id="productImage" alt="productHeadImage" title="Product Title Image" width="750px" height="750px">
                             </div>
                         </div>
 
@@ -246,8 +248,13 @@
                 $.get(userURL, function (data) {
                     console.log(data)
                     $('#viewModal').modal('show');
+                    let images = JSON.parse(data.image)
+                    console.log('/ProductImage/'+images[0])
+                    $('#productImage').attr("src","/ProductImage/"+images[0]);
+                    $('.title-name').text(data.productName);
+                    $('.price').text(data.price+" BDT");
                 })
             });
         });
-    </script>
+    </script>--}}
 @endsection
