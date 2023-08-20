@@ -1,10 +1,10 @@
 <template>
-Dashboard
+
 </template>
 
 <script>
 export default {
-    name: "customerDashboard"
+    name: "addProductDetails"
 }
 </script>
 

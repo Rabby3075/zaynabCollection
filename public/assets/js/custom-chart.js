@@ -303,7 +303,7 @@ var options = {
         align: 'left'
     },
     subtitle: {
-        text: 'Price Movements',
+        text: 'Color Movements',
         align: 'left'
     },
     xaxis: {

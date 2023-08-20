@@ -20,7 +20,12 @@ return new class extends Migration
             $table->unsignedBigInteger('product_category_id');
             $table->foreign('product_category_id')->references('id')->on('product_categories')->onDelete('cascade');
             $table->string('productName');
-            $table->double('price');
+            $table->unsignedBigInteger('color_id');
+            $table->foreign('color_id')->references('id')->on('colors');
+            $table->unsignedBigInteger('size_id');
+            $table->foreign('size_id')->references('id')->on('sizes');
+            $table->json('prices');
+            $table->double('total_price');
             $table->integer('quantity');
             $table->json('image');
             $table->text('details')->nullable();

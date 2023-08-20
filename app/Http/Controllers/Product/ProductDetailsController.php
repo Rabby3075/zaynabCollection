@@ -75,7 +75,7 @@ class ProductDetailsController extends Controller
         ]);
         $product = ProductDetails::where('id',$request->id)->first();
         $product->productName = $request->name;
-        $product->category = $request->category;
+        $product->product_category_id = $request->category;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
         $product->status = $request->status;

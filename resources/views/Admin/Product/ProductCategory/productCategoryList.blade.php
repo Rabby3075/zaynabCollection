@@ -148,6 +148,7 @@
                 $('body').on('click', '#delete', function () {
                     var userURL = $(this).data('url');
                     $.get(userURL, function (data) {
+                        console.log(data);
                         $('#deleteModal').modal('show');
                         $('#product-id').val(data.id);
 

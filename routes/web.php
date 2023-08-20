@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Product\colorController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductDetailsController;
+use App\Http\Controllers\Product\SizeController;
 use Illuminate\Support\Facades\Route;
 /*---------Controller----------*/
 use App\Http\Controllers\AdminController;
@@ -40,13 +42,29 @@ Route::group(['name' => 'Admin'], function() {
             Route::post('/product-category-delete',[ProductCategoryController::class,'deleteProductCategory'])->name('deleteProductCategory');
             Route::post('/product-category-update',[ProductCategoryController::class,'editProductCategory'])->name('editProductCategory');
         });
-        Route::group(['name' => 'Product Details'], function() {
+        Route::group(['name' => 'ProductDetails'], function() {
             Route::get('/add-product-details',[ProductDetailsController::class, 'addProductDetailsView'])->name('addProductDetailsView');
             Route::get('/product-list',[ProductDetailsController::class, 'productList'])->name('productList');
             Route::post('/add-product',[ProductDetailsController::class, 'addProductDetails'])->name('addProductDetails');
             Route::post('/delete-product',[ProductDetailsController::class, 'productDelete'])->name('productDelete');
             Route::post('/update-product',[ProductDetailsController::class, 'editProduct'])->name('editProduct');
             Route::get('/get-product-info/{id}',[ProductDetailsController::class,'getProductDetailsInfo'])->name('getProductDetailsInfo');
+        });
+        Route::group(['name' => 'color'], function() {
+            Route::get('/add-color',[colorController::class, 'colorView'])->name('colorView');
+            Route::post('/add-color-post',[colorController::class, 'addColor'])->name('addColor');
+            Route::get('/color-list',[colorController::class, 'colorList'])->name('colorList');
+            Route::get('/get-color-info/{id}',[colorController::class,'getColorInfo'])->name('getColorInfo');
+            Route::post('/delete-color',[colorController::class,'deleteColor'])->name('deleteColor');
+            Route::post('/update-color',[colorController::class,'updateColor'])->name('updateColor');
+        });
+        Route::group(['name' => 'size'], function() {
+            Route::get('/add-size',[SizeController::class, 'sizeView'])->name('sizeView');
+            Route::post('/add-size-post',[SizeController::class, 'addSize'])->name('addSize');
+            Route::get('/size-list',[SizeController::class, 'sizeList'])->name('sizeList');
+            Route::get('/get-size-info/{id}',[SizeController::class,'getSizeInfo'])->name('getSizeInfo');
+            Route::post('/delete-size',[SizeController::class,'deleteSize'])->name('deleteSize');
+            Route::post('/update-size',[SizeController::class,'updateSize'])->name('updateSize');
         });
 
     });
