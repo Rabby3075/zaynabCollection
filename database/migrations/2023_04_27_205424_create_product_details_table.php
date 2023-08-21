@@ -20,13 +20,9 @@ return new class extends Migration
             $table->unsignedBigInteger('product_category_id');
             $table->foreign('product_category_id')->references('id')->on('product_categories')->onDelete('cascade');
             $table->string('productName');
-            $table->unsignedBigInteger('color_id');
-            $table->foreign('color_id')->references('id')->on('colors');
-            $table->unsignedBigInteger('size_id');
-            $table->foreign('size_id')->references('id')->on('sizes');
-            $table->json('prices');
-            $table->double('total_price');
-            $table->integer('quantity');
+            $table->json('product_entities');
+            $table->double('price');
+            $table->integer('total_quantity');
             $table->json('image');
             $table->text('details')->nullable();
             $table->integer('status');

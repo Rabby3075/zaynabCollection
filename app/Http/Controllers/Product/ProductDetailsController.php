@@ -3,15 +3,29 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product\Color;
 use App\Models\Product\ProductCategory;
 use App\Models\Product\ProductDetails;
+use App\Models\Product\Size;
 use Illuminate\Http\Request;
 
 class ProductDetailsController extends Controller
 {
     public function addProductDetailsView(){
-        $productCategory = ProductCategory::all();
-        return view('Admin.Product.ProductDetails.addProductDetails')->with('categories',$productCategory);
+
+        return view('Admin.Product.ProductDetails.addProductDetails');
+    }
+    public function getProductCategory(){
+        $categories = ProductCategory::all();
+        return response()->json($categories);
+    }
+    public function getColor(){
+        $colors = Color::all();
+        return response()->json($colors);
+    }
+    public function getSizes(){
+        $sizes = Size::all();
+        return response()->json($sizes);
     }
     public function addProductDetails(Request $request){
         $validate = $request->validate([
